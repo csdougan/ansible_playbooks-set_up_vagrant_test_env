@@ -1,0 +1,12 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "{{ vagrant_box }}"
+   config.vm.provider "virtualbox" do |vb|
+     vb.memory = "{{ vm_memory }}"
+   end
+  config.vm.network :private_network, ip: "{{ start_ip }}.{{ item.0| int + 1 }}"
+  config.vm.provision "file", source: "{{ ssh_key_location }}", destination: "~vagrant/.ssh/me.pub"
+  config.vm.provision "shell", inline: "cat ~vagrant/.ssh/me.pub >> ~vagrant/.ssh/authorized_keys"
+end

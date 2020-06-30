@@ -1,0 +1,29 @@
+---
+- hosts: localhost
+  become: false
+  vars_files:
+    - ../vars/vagrant.yml
+  tasks: 
+
+  - name: Create vagrant project directory
+    file: path={{ vagrant_project_path }}  state=directory
+
+  - name: Create ansible vms subdir
+    file: path={{ ansible_vms_path }} state=directory
+
+  - name: create node directories
+    file: path={{ ansible_vms_path }}/{{ item }} state=directory
+    with_items: "{{ groups['test_nodes'] }}"
+
+  - name: Set the counter
+    set_fact: counter={{ counter | int + 1 }}
+
+  - name: Create Vagrantfiles
+    template: src=../templates/Vagrantfile.j2 dest={{ ansible_vms_path }}/{{ item.1 }}/Vagrantfile
+    with_indexed_items: " {{ groups['test_nodes'] }}"
+
+  - name: Start Vagrant Boxes
+    command: vagrant up
+    args:
+      chdir: "{{ ansible_vms_path }}/{{ item }}"
+    with_items: "{{ groups['test_nodes'] }}"      

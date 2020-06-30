@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  become: false
+  vars_files:
+    - ../vars/vagrant.yml
+  tasks: 
+
+  - name: Destroy Vagrant Boxes
+    command: vagrant destroy -f
+    args:
+      chdir: "{{ ansible_vms_path }}/{{ item }}"
+    with_items: "{{ groups['test_nodes'] }}"      
+
+  - name: Remove All Ansible vm vagrant files
+    file: 
+      state: absent
+      path: "{{ ansible_vms_path }}"

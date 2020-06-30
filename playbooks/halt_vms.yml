@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  become: false
+  vars_files:
+    - ../vars/vagrant.yml
+  tasks: 
+
+  - name: Stop Vagrant Boxes
+    command: vagrant halt
+    args:
+      chdir: "{{ ansible_vms_path }}/{{ item }}"
+    with_items: "{{ groups['test_nodes'] }}"      

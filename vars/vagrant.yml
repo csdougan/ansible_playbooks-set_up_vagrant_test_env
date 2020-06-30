@@ -1,0 +1,9 @@
+---
+  counter: 0
+  vm_memory: 512
+  vagrant_box: centos7
+  start_ip: 192.168.99
+  ssh_key_location: ~/.ssh/id_rsa.pub
+  vagrant_project_path: ~/vagrant
+  ansible_vms_path: "{{ vagrant_project_path }}/ansible-vms"
+...

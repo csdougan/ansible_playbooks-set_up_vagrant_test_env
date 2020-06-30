@@ -1,0 +1,7 @@
+[test_nodes]
+nodeA ansible_host=192.168.99.1
+nodeB ansible_host=192.168.99.2
+nodeC ansible_host=192.168.99.3
+nodeD ansible_host=192.168.99.4
+nodeE ansible_host=192.168.99.5
+nodeF ansible_host=192.168.99.6
